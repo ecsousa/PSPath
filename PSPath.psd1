@@ -9,4 +9,8 @@ DotNetFrameworkVersion = '4.0'
 CLRVersion = '4.0'
 FunctionsToExport = 'Update-Path', 'Add-Path'
 HelpInfoURI = 'https://github.com/ecsousa/PSPath'
+PrivateData = @{
+        Tags='Path'
+        ProjectUri='https://github.com/ecsousa/PSPath'
+    }
 }
