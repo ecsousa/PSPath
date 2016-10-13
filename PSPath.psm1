@@ -36,8 +36,11 @@ function Add-Path {
     else {
         $regPath = 'HKCU:\Environment';
     }
-
-    $currentPath = (Get-ItemProperty $regPath).PATH;
+    
+    # Need to preserve the DOS style environmental variables like %USERPROFILE% because PATH is stored in the registry as an ExpandString.  
+    # Otherwise when read, appended, and set the env vars will have been expanded and the original values lost. 
+    # The '$false' is the DefaultValue, which is what what would be returned if the property 'PATH' does not exist.
+    $currentPath = (Get-Item -Path $regPath).GetValue('Path', $false, [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
 
     if($currentPath) {
         $newPath = "$currentPath;$path";
@@ -50,5 +53,4 @@ function Add-Path {
 
     Update-Path
 }
-
 
